@@ -1,0 +1,51 @@
+/* Estilos generales del cuerpo */
+body {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos del texto animado (igual que antes) */
+#texto-animado {
+    font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
+    font-size: 3.5rem;
+    border-right: 4px solid #f0f0f0;
+    animation: parpadeoCursor 0.75s step-end infinite;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Animación del parpadeo (igual que antes) */
+@keyframes parpadeoCursor {
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: #f0f0f0;
+    }
+}
+
+/* --- NUEVO --- */
+/* Estilos para el visor de PDF */
+#visor-pdf {
+    /* Oculto por defecto */
+    display: none;
+
+    /* Ocupa casi toda la pantalla */
+    width: 90vw;
+    /* 90% del ancho de la ventana */
+    height: 90vh;
+    /* 90% del alto de la ventana */
+
+    /* Un borde para que se vea bien */
+    border: 2px solid #f0f0f0;
+    border-radius: 8px;
+}
