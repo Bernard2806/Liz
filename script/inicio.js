@@ -213,10 +213,12 @@ function verificarCombinacion() {
 }
 
 function desbloquearCandado() {
-    // Animación de desbloqueo
-    arco.classList.add('desbloqueado');
-    mensajeCandado.textContent = "¡Desbloqueado! ❤️";
-    mensajeCandado.classList.add('exito');
+    // Animación de desbloqueo (si existen los elementos)
+    if (arco) arco.classList.add('desbloqueado');
+    if (mensajeCandado) {
+        mensajeCandado.textContent = "¡Desbloqueado! ❤️";
+        mensajeCandado.classList.add('exito');
+    }
     
     // Deshabilitar las ruedas
     const botones = document.querySelectorAll('.btn-rueda');
