@@ -23,6 +23,108 @@ let valoresRuedas = [0, 0, 0, 0];
 
 let indice = 0;
 
+// ============================================
+// PARTÍCULAS FLOTANTES (CORAZONES)
+// ============================================
+
+let particulasInterval = null;
+
+function crearParticulasFlotantes() {
+    const container = document.createElement('div');
+    container.className = 'particulas-container';
+    document.body.appendChild(container);
+    
+    // Crear corazones continuamente
+    particulasInterval = setInterval(() => {
+        crearCorazonFlotante(container);
+    }, 800);
+    
+    // Crear algunos corazones iniciales
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => crearCorazonFlotante(container), i * 300);
+    }
+    
+    // Limpiar el intervalo cuando la página se descarga
+    window.addEventListener('beforeunload', () => {
+        if (particulasInterval) {
+            clearInterval(particulasInterval);
+        }
+    });
+}
+
+function crearCorazonFlotante(container) {
+    const corazon = document.createElement('span');
+    corazon.className = 'corazon-flotante';
+    corazon.textContent = '❤';
+    
+    // Posición horizontal aleatoria
+    corazon.style.left = Math.random() * 100 + '%';
+    
+    // Tamaño aleatorio
+    const size = 0.8 + Math.random() * 1.2;
+    corazon.style.fontSize = size + 'rem';
+    
+    // Duración aleatoria
+    const duration = 8 + Math.random() * 12;
+    corazon.style.animationDuration = duration + 's';
+    
+    // Opacidad aleatoria
+    corazon.style.opacity = 0.15 + Math.random() * 0.25;
+    
+    container.appendChild(corazon);
+    
+    // Eliminar después de la animación
+    setTimeout(() => {
+        corazon.remove();
+    }, duration * 1000);
+}
+
+// ============================================
+// EFECTOS DE DESBLOQUEO
+// ============================================
+
+function crearParticulasExito() {
+    const emojis = ['❤', '💕', '💖', '✨', '💗', '💝'];
+    const candado = document.querySelector('.candado');
+    const rect = candado.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const particula = document.createElement('span');
+            particula.className = 'particula-exito';
+            particula.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // Posición inicial en el centro del candado
+            particula.style.left = centerX + 'px';
+            particula.style.top = centerY + 'px';
+            
+            // Dirección aleatoria usando transform inline
+            const angle = (Math.random() * 360) * (Math.PI / 180);
+            const distance = 100 + Math.random() * 200;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance - 100;
+            
+            // Aplicar animación personalizada con keyframes inline
+            particula.style.animation = 'none';
+            particula.animate([
+                { opacity: 1, transform: 'translate(-50%, -50%) scale(0) rotate(0deg)' },
+                { opacity: 1, transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.5) rotate(180deg)` },
+                { opacity: 0, transform: `translate(calc(-50% + ${tx * 1.5}px), calc(-50% + ${ty * 1.5}px)) scale(0.5) rotate(360deg)` }
+            ], {
+                duration: 1500,
+                easing: 'ease-out',
+                fill: 'forwards'
+            });
+            
+            document.body.appendChild(particula);
+            
+            setTimeout(() => particula.remove(), 1500);
+        }, i * 50);
+    }
+}
+
 function escribirTexto() {
     if (indice < textoCompleto.length) {
         elementoTexto.textContent += textoCompleto.charAt(indice);
@@ -120,11 +222,26 @@ function desbloquearCandado() {
     const botones = document.querySelectorAll('.btn-rueda');
     botones.forEach(btn => btn.disabled = true);
     
+    // Crear partículas de éxito
+    crearParticulasExito();
+    
+    // Añadir efecto al fondo
+    document.body.classList.add('desbloqueado');
+    
+    // Añadir efecto de disolución al candado
+    setTimeout(() => {
+        const candado = document.querySelector('.candado');
+        candado.classList.add('disolviendose');
+    }, 500);
+    
     // Redirigir después de la animación
     setTimeout(() => {
         window.location.href = URL_DESTINO;
-    }, 2000);
+    }, 2500);
 }
 
 // Empezamos la animación cuando la página carga
-document.addEventListener("DOMContentLoaded", escribirTexto);
+document.addEventListener("DOMContentLoaded", () => {
+    crearParticulasFlotantes();
+    escribirTexto();
+});
