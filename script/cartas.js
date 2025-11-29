@@ -82,8 +82,9 @@ function renderizarCartas(cartas, config, container) {
             <div class="carta-contenido">
                 <h3 class="carta-titulo">${carta.titulo || 'Carta de Amor'}</h3>
                 <p class="carta-descripcion">${carta.descripcion || ''}</p>
-                <span class="carta-boton">Abrir carta 💌</span>
+                <span class="carta-boton">Leer carta ✉</span>
             </div>
+            <div class="carta-sello">❤</div>
         `;
         
         // Agregar efectos de hover para cambiar la imagen del sobre
