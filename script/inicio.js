@@ -5,7 +5,7 @@ const textoCompleto = "Te amo Liz";
 const velocidadEscritura = 150; // Milisegundos por letra
 
 // Contraseña del candado (4 dígitos)
-const CLAVE_CANDADO = "1234";
+const CLAVE_CANDADO = "2349";
 
 // URL a la que redirigir cuando se desbloquea
 const URL_DESTINO = "sorpresa.html";
