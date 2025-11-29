@@ -8,7 +8,7 @@ const velocidadEscritura = 150; // Milisegundos por letra
 const CLAVE_CANDADO = "1210";
 
 // URL a la que redirigir cuando se desbloquea
-const URL_DESTINO = "sorpresa.html";
+const URL_DESTINO = "cartas.html";
 
 // ============================================
 

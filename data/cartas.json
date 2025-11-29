@@ -1,0 +1,36 @@
+{
+  "cartas": [
+    {
+      "id": 1,
+      "titulo": "Nuestra Primera Cita",
+      "descripcion": "El día que todo comenzó...",
+      "imagen": "",
+      "url": "carta1.html"
+    },
+    {
+      "id": 2,
+      "titulo": "Te Amo",
+      "descripcion": "Razones por las que te amo",
+      "imagen": "",
+      "url": "carta2.html"
+    },
+    {
+      "id": 3,
+      "titulo": "Nuestros Momentos",
+      "descripcion": "Recuerdos especiales juntos",
+      "imagen": "",
+      "url": "carta3.html"
+    },
+    {
+      "id": 4,
+      "titulo": "Mi Promesa",
+      "descripcion": "Lo que prometo para siempre",
+      "imagen": "",
+      "url": "carta4.html"
+    }
+  ],
+  "configuracion": {
+    "imagenPorDefecto": "images/sobre-cerrado.png",
+    "imagenHover": "images/sobre-abierto.png"
+  }
+}
