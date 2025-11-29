@@ -22,63 +22,82 @@
                 <div class="arco-brillo"></div>
             </div>
             
-            <!-- Cuerpo del candado en forma de corazón -->
+            <!-- Cuerpo del candado en forma de corazón (SVG responsivo) -->
             <div class="cuerpo-corazon">
-                <div class="corazon-brillo"></div>
-                
-                <!-- Ruedas de combinación -->
-                <div class="ruedas-container">
-                    <div class="rueda" data-index="0">
-                        <div class="numero-display">
-                            <span class="num-arriba">9</span>
-                            <span class="num-actual">0</span>
-                            <span class="num-abajo">1</span>
+                <!-- SVG del corazón: se escala con el contenedor -->
+                <svg class="heart-svg" viewBox="0 0 200 180" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                            <stop offset="0%" stop-color="#FFE69A" />
+                            <stop offset="45%" stop-color="#FFD76B" />
+                            <stop offset="100%" stop-color="#D4AF37" />
+                        </linearGradient>
+                        <radialGradient id="glowGrad" cx="50%" cy="40%" r="60%">
+                            <stop offset="0%" stop-color="#FFD76B" stop-opacity="0.9" />
+                            <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.25" />
+                            <stop offset="100%" stop-color="#B8960C" stop-opacity="0" />
+                        </radialGradient>
+                        <filter id="heartShadow" x="-60%" y="-60%" width="220%" height="220%">
+                            <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000" flood-opacity="0.6"/>
+                        </filter>
+                    </defs>
+                    <!-- glow detrás para potenciar visibilidad -->
+                    <ellipse cx="100" cy="95" rx="78" ry="60" fill="url(#glowGrad)" />
+                    <!-- forma del corazón con fill y shadow inline para evitar dependencias CSS externas -->
+                    <path class="heart-shape" d="M100 165 L30 100 A32 32 0 0 1 30 56 C30 34 50 20 74 34 C92 44 100 60 100 60 C100 60 108 44 126 34 C150 20 170 34 170 56 A32 32 0 0 1 170 100 L100 165 Z" fill="url(#goldGrad)" stroke="rgba(0,0,0,0.12)" stroke-width="1" filter="url(#heartShadow)" />
+                </svg>
+
+                <!-- Wrapper que centra las ruedas sobre el corazón -->
+                <div class="ruedas-wrapper">
+                    <div class="ruedas-container">
+                        <div class="rueda" data-index="0">
+                            <div class="numero-display">
+                                <span class="num-arriba">9</span>
+                                <span class="num-actual">0</span>
+                                <span class="num-abajo">1</span>
+                            </div>
+                            <div class="rueda-controles">
+                                <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                                <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                            </div>
                         </div>
-                        <div class="rueda-controles">
-                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
-                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                        <div class="rueda" data-index="1">
+                            <div class="numero-display">
+                                <span class="num-arriba">9</span>
+                                <span class="num-actual">0</span>
+                                <span class="num-abajo">1</span>
+                            </div>
+                            <div class="rueda-controles">
+                                <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                                <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="rueda" data-index="1">
-                        <div class="numero-display">
-                            <span class="num-arriba">9</span>
-                            <span class="num-actual">0</span>
-                            <span class="num-abajo">1</span>
+                        <div class="rueda" data-index="2">
+                            <div class="numero-display">
+                                <span class="num-arriba">9</span>
+                                <span class="num-actual">0</span>
+                                <span class="num-abajo">1</span>
+                            </div>
+                            <div class="rueda-controles">
+                                <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                                <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                            </div>
                         </div>
-                        <div class="rueda-controles">
-                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
-                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
-                        </div>
-                    </div>
-                    <div class="rueda" data-index="2">
-                        <div class="numero-display">
-                            <span class="num-arriba">9</span>
-                            <span class="num-actual">0</span>
-                            <span class="num-abajo">1</span>
-                        </div>
-                        <div class="rueda-controles">
-                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
-                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
-                        </div>
-                    </div>
-                    <div class="rueda" data-index="3">
-                        <div class="numero-display">
-                            <span class="num-arriba">9</span>
-                            <span class="num-actual">0</span>
-                            <span class="num-abajo">1</span>
-                        </div>
-                        <div class="rueda-controles">
-                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
-                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                        <div class="rueda" data-index="3">
+                            <div class="numero-display">
+                                <span class="num-arriba">9</span>
+                                <span class="num-actual">0</span>
+                                <span class="num-abajo">1</span>
+                            </div>
+                            <div class="rueda-controles">
+                                <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                                <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Ojo de cerradura decorativo -->
-                <div class="cerradura">
-                    <div class="cerradura-circulo"></div>
-                    <div class="cerradura-triangulo"></div>
-                </div>
+
+                <!-- cerradura removida (candado con combinación, no llave) -->
             </div>
         </div>
     </div>
