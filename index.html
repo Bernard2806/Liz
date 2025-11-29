@@ -5,13 +5,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <h1 id="texto-animado"></h1>
 
-    <iframe id="visor-pdf" src=""></iframe>
+    <!-- Candado con combinación -->
+    <div id="candado-container">
+        <div class="candado">
+            <!-- Arco del candado (parte superior metálica) -->
+            <div class="arco" id="arco">
+                <div class="arco-brillo"></div>
+            </div>
+            
+            <!-- Cuerpo del candado en forma de corazón -->
+            <div class="cuerpo-corazon">
+                <div class="corazon-brillo"></div>
+                
+                <!-- Ruedas de combinación -->
+                <div class="ruedas-container">
+                    <div class="rueda" data-index="0">
+                        <div class="numero-display">
+                            <span class="num-arriba">9</span>
+                            <span class="num-actual">0</span>
+                            <span class="num-abajo">1</span>
+                        </div>
+                        <div class="rueda-controles">
+                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                        </div>
+                    </div>
+                    <div class="rueda" data-index="1">
+                        <div class="numero-display">
+                            <span class="num-arriba">9</span>
+                            <span class="num-actual">0</span>
+                            <span class="num-abajo">1</span>
+                        </div>
+                        <div class="rueda-controles">
+                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                        </div>
+                    </div>
+                    <div class="rueda" data-index="2">
+                        <div class="numero-display">
+                            <span class="num-arriba">9</span>
+                            <span class="num-actual">0</span>
+                            <span class="num-abajo">1</span>
+                        </div>
+                        <div class="rueda-controles">
+                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                        </div>
+                    </div>
+                    <div class="rueda" data-index="3">
+                        <div class="numero-display">
+                            <span class="num-arriba">9</span>
+                            <span class="num-actual">0</span>
+                            <span class="num-abajo">1</span>
+                        </div>
+                        <div class="rueda-controles">
+                            <button class="btn-rueda btn-arriba" data-dir="up">▲</button>
+                            <button class="btn-rueda btn-abajo" data-dir="down">▼</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ojo de cerradura decorativo -->
+                <div class="cerradura">
+                    <div class="cerradura-circulo"></div>
+                    <div class="cerradura-triangulo"></div>
+                </div>
+            </div>
+        </div>
+        
+        <p id="mensaje-candado">Gira las ruedas para desbloquear mi corazón</p>
+    </div>
 
     <script src="script.js"></script>
 </body>

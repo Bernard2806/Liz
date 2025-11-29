@@ -3,49 +3,494 @@ body {
     background-color: #1a1a1a;
     color: #f0f0f0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
-/* Estilos del texto animado (igual que antes) */
+/* Estilos del texto animado */
 #texto-animado {
-    font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 3.5rem;
+    font-weight: 600;
     border-right: 4px solid #f0f0f0;
     animation: parpadeoCursor 0.75s step-end infinite;
     white-space: nowrap;
     overflow: hidden;
 }
 
-/* Animación del parpadeo (igual que antes) */
-@keyframes parpadeoCursor {
+@media (max-width: 600px) {
+    #texto-animado {
+        font-size: 2rem;
+    }
+}
 
-    from,
-    to {
+/* Animación del parpadeo */
+@keyframes parpadeoCursor {
+    from, to {
         border-color: transparent;
     }
-
     50% {
         border-color: #f0f0f0;
     }
 }
 
-/* --- NUEVO --- */
-/* Estilos para el visor de PDF */
-#visor-pdf {
-    /* Oculto por defecto */
+/* ============================================ */
+/* ESTILOS DEL CANDADO CORAZÓN */
+/* ============================================ */
+
+#candado-container {
     display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+}
 
-    /* Ocupa casi toda la pantalla */
-    width: 90vw;
-    /* 90% del ancho de la ventana */
-    height: 90vh;
-    /* 90% del alto de la ventana */
+.candado {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    /* Un borde para que se vea bien */
-    border: 2px solid #f0f0f0;
+/* ============================================ */
+/* ARCO DEL CANDADO - Metálico dorado clásico */
+/* ============================================ */
+
+.arco {
+    width: 100px;
+    height: 60px;
+    border: 10px solid;
+    border-color: #D4AF37;
+    border-bottom: none;
+    border-radius: 60px 60px 0 0;
+    position: relative;
+    margin-bottom: -5px;
+    z-index: 10;
+    background: transparent;
+    box-shadow: 
+        inset 3px 0 6px rgba(255, 223, 0, 0.3),
+        inset -3px 0 6px rgba(0, 0, 0, 0.4),
+        0 -3px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: right bottom;
+}
+
+.arco::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5px;
+    right: 5px;
+    bottom: 0;
+    border: 6px solid #1a1a1a;
+    border-bottom: none;
+    border-radius: 50px 50px 0 0;
+}
+
+.arco-brillo {
+    position: absolute;
+    top: 2px;
+    left: 8px;
+    width: 20px;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, transparent 100%);
+    border-radius: 10px 10px 0 0;
+}
+
+.arco.desbloqueado {
+    transform: rotate(-35deg) translateY(-15px);
+    border-color: #FFD700;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+}
+
+/* ============================================ */
+/* CUERPO DEL CANDADO - FORMA DE CORAZÓN */
+/* ============================================ */
+
+.cuerpo-corazon {
+    position: relative;
+    width: 200px;
+    height: 190px;
+    background: linear-gradient(135deg, #E8B923 0%, #D4AF37 25%, #B8960C 50%, #D4AF37 75%, #E8B923 100%);
+    transform: rotate(-45deg);
+    border-radius: 0 0 0 15px;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.5),
+        inset 0 5px 15px rgba(255, 255, 255, 0.3),
+        inset 0 -5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuerpo-corazon::before,
+.cuerpo-corazon::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: inherit;
+    border-radius: 50%;
+    box-shadow: inherit;
+}
+
+.cuerpo-corazon::before {
+    top: -100px;
+    left: 0;
+}
+
+.cuerpo-corazon::after {
+    top: 0;
+    left: 100px;
+}
+
+.corazon-brillo {
+    position: absolute;
+    top: -80px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 5;
+}
+
+/* ============================================ */
+/* RUEDAS DE COMBINACIÓN */
+/* ============================================ */
+
+.ruedas-container {
+    position: absolute;
+    display: flex;
+    gap: 6px;
+    transform: rotate(45deg);
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    transform: rotate(45deg) translate(-50%, -50%);
+    margin-top: -20px;
+    margin-left: -5px;
+}
+
+.rueda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #2a2a2a 100%);
     border-radius: 8px;
+    padding: 8px 4px;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.9),
+        0 2px 4px rgba(255, 215, 0, 0.2);
+    border: 2px solid #8B7500;
+    transition: transform 0.1s ease;
+}
+
+.rueda.click {
+    transform: scale(0.96);
+}
+
+/* Display de números */
+.numero-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
+    border-radius: 6px;
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    box-shadow: 
+        inset 0 0 12px rgba(0, 0, 0, 0.95);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #333;
+}
+
+.numero-display::before,
+.numero-display::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 12px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.numero-display::before {
+    top: 0;
+    background: linear-gradient(to bottom, #0d0d0d, transparent);
+}
+
+.numero-display::after {
+    bottom: 0;
+    background: linear-gradient(to top, #0d0d0d, transparent);
+}
+
+/* Tipografía elegante para los números */
+.num-arriba, .num-abajo {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.9rem;
+    color: #4a4a4a;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.num-actual {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 
+        0 0 8px rgba(255, 215, 0, 0.6),
+        0 1px 2px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
+}
+
+/* Animación de giro */
+.numero-display.girando-arriba {
+    animation: girarArriba 0.15s ease-out;
+}
+
+.numero-display.girando-abajo {
+    animation: girarAbajo 0.15s ease-out;
+}
+
+@keyframes girarArriba {
+    0% { transform: translateY(8px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes girarAbajo {
+    0% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
+
+/* Controles de la rueda */
+.rueda-controles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.btn-rueda {
+    background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 50%, #1a1a1a 100%);
+    border: 1px solid #555;
+    color: #D4AF37;
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    transition: all 0.1s ease;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.btn-rueda:hover {
+    background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 50%, #2a2a2a 100%);
+    color: #FFD700;
+    border-color: #D4AF37;
+}
+
+.btn-rueda:active {
+    transform: scale(0.95);
+}
+
+.btn-rueda:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ============================================ */
+/* OJO DE CERRADURA DECORATIVO */
+/* ============================================ */
+
+.cerradura {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: rotate(45deg) translateX(-50%);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cerradura-circulo {
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #1a1a1a 40%, #333 100%);
+    border-radius: 50%;
+    border: 2px solid #8B7500;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+}
+
+.cerradura-triangulo {
+    width: 8px;
+    height: 12px;
+    background: linear-gradient(180deg, #333 0%, #1a1a1a 100%);
+    margin-top: -2px;
+    border: 2px solid #8B7500;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+}
+
+/* ============================================ */
+/* MENSAJE DEL CANDADO */
+/* ============================================ */
+
+#mensaje-candado {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #D4AF37;
+    text-align: center;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+#mensaje-candado.exito {
+    color: #FFD700;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-shadow: 
+        0 0 25px rgba(255, 215, 0, 0.8),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulsar 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulsar {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.03); opacity: 0.9; }
+}
+
+/* ============================================ */
+/* RESPONSIVE DESIGN */
+/* ============================================ */
+
+@media (max-width: 480px) {
+    .arco {
+        width: 70px;
+        height: 45px;
+        border-width: 8px;
+    }
+    
+    .cuerpo-corazon {
+        width: 150px;
+        height: 140px;
+    }
+    
+    .cuerpo-corazon::before,
+    .cuerpo-corazon::after {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .cuerpo-corazon::before {
+        top: -75px;
+    }
+    
+    .cuerpo-corazon::after {
+        left: 75px;
+    }
+    
+    .ruedas-container {
+        gap: 3px;
+    }
+    
+    .rueda {
+        padding: 5px 3px;
+    }
+    
+    .numero-display {
+        padding: 3px 7px;
+    }
+    
+    .num-actual {
+        font-size: 1.4rem;
+    }
+    
+    .num-arriba, .num-abajo {
+        font-size: 0.7rem;
+    }
+    
+    .btn-rueda {
+        padding: 2px 7px;
+        font-size: 0.6rem;
+    }
+    
+    #mensaje-candado {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+    
+    #mensaje-candado.exito {
+        font-size: 1.2rem;
+    }
+    
+    .cerradura-circulo {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .cerradura-triangulo {
+        width: 6px;
+        height: 9px;
+    }
+}
+
+@media (max-width: 350px) {
+    .arco {
+        width: 55px;
+        height: 35px;
+        border-width: 6px;
+    }
+    
+    .cuerpo-corazon {
+        width: 120px;
+        height: 110px;
+    }
+    
+    .cuerpo-corazon::before,
+    .cuerpo-corazon::after {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .cuerpo-corazon::before {
+        top: -60px;
+    }
+    
+    .cuerpo-corazon::after {
+        left: 60px;
+    }
+    
+    .ruedas-container {
+        gap: 2px;
+    }
+    
+    .numero-display {
+        padding: 2px 5px;
+    }
+    
+    .num-actual {
+        font-size: 1.1rem;
+    }
+    
+    .num-arriba, .num-abajo {
+        font-size: 0.6rem;
+    }
+    
+    .btn-rueda {
+        padding: 2px 5px;
+        font-size: 0.55rem;
+    }
 }

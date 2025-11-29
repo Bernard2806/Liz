@@ -1,42 +1,129 @@
-// --- Configuración (igual que antes) ---
-const textoCompleto = "Te amo Liz, y gracias";
+// ============================================
+// --- CONFIGURACIÓN ---
+// ============================================
+const textoCompleto = "Te amo Liz";
 const velocidadEscritura = 150; // Milisegundos por letra
-const pdfURL = "carta.pdf"; // IMPORTANTE: El nombre de tu archivo PDF
-// ---------------------
+
+// Contraseña del candado (4 dígitos)
+const CLAVE_CANDADO = "1234";
+
+// URL a la que redirigir cuando se desbloquea
+const URL_DESTINO = "sorpresa.html";
+
+// ============================================
 
 // Obtenemos los elementos del HTML
 const elementoTexto = document.getElementById("texto-animado");
-const visorPdf = document.getElementById("visor-pdf"); // <-- NUEVO
+const candadoContainer = document.getElementById("candado-container");
+const arco = document.getElementById("arco");
+const mensajeCandado = document.getElementById("mensaje-candado");
+
+// Estado de las ruedas (4 dígitos, empezando en 0)
+let valoresRuedas = [0, 0, 0, 0];
 
 let indice = 0;
 
 function escribirTexto() {
     if (indice < textoCompleto.length) {
-        // Añadimos la siguiente letra al H1
         elementoTexto.textContent += textoCompleto.charAt(indice);
         indice++;
-        
-        // Volvemos a llamar a esta función
         setTimeout(escribirTexto, velocidadEscritura);
     } else {
-        // --- Animación Terminada (MODIFICADO) ---
-        
-        // 1. Ocultamos el cursor parpadeante
+        // Animación terminada
         elementoTexto.style.borderRight = "none";
         
-        // 2. Esperamos un momento (1 segundo)
         setTimeout(() => {
-            // 3. Ocultamos el texto "Te amo..."
             elementoTexto.style.display = "none";
-            
-            // 4. Asignamos la URL del PDF al visor
-            visorPdf.src = pdfURL;
-            
-            // 5. Mostramos el visor del PDF
-            visorPdf.style.display = "block";
-            
-        }, 1000); // 1000ms = 1 segundo de espera
+            candadoContainer.style.display = "flex";
+            inicializarCandado();
+        }, 1000);
     }
+}
+
+function inicializarCandado() {
+    const ruedas = document.querySelectorAll('.rueda');
+    
+    ruedas.forEach((rueda, index) => {
+        const btnArriba = rueda.querySelector('.btn-arriba');
+        const btnAbajo = rueda.querySelector('.btn-abajo');
+        
+        btnArriba.addEventListener('click', () => girarRueda(index, 'up'));
+        btnAbajo.addEventListener('click', () => girarRueda(index, 'down'));
+        
+        // Soporte para scroll del mouse
+        rueda.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                girarRueda(index, 'up');
+            } else {
+                girarRueda(index, 'down');
+            }
+        });
+        
+        actualizarDisplay(index);
+    });
+}
+
+function girarRueda(index, direccion) {
+    const rueda = document.querySelectorAll('.rueda')[index];
+    const display = rueda.querySelector('.numero-display');
+    
+    // Añadir clase de animación
+    display.classList.add(direccion === 'up' ? 'girando-arriba' : 'girando-abajo');
+    
+    // Actualizar valor
+    if (direccion === 'up') {
+        valoresRuedas[index] = (valoresRuedas[index] + 1) % 10;
+    } else {
+        valoresRuedas[index] = (valoresRuedas[index] - 1 + 10) % 10;
+    }
+    
+    // Reproducir sonido de click (simulado con vibración visual)
+    rueda.classList.add('click');
+    setTimeout(() => rueda.classList.remove('click'), 100);
+    
+    // Quitar clase de animación y actualizar display
+    setTimeout(() => {
+        display.classList.remove('girando-arriba', 'girando-abajo');
+        actualizarDisplay(index);
+        verificarCombinacion();
+    }, 150);
+}
+
+function actualizarDisplay(index) {
+    const rueda = document.querySelectorAll('.rueda')[index];
+    const numActual = rueda.querySelector('.num-actual');
+    const numArriba = rueda.querySelector('.num-arriba');
+    const numAbajo = rueda.querySelector('.num-abajo');
+    
+    const valor = valoresRuedas[index];
+    numActual.textContent = valor;
+    numArriba.textContent = (valor - 1 + 10) % 10;
+    numAbajo.textContent = (valor + 1) % 10;
+}
+
+function verificarCombinacion() {
+    const combinacionActual = valoresRuedas.join('');
+    
+    if (combinacionActual === CLAVE_CANDADO) {
+        desbloquearCandado();
+    }
+}
+
+function desbloquearCandado() {
+    // Animación de desbloqueo
+    arco.classList.add('desbloqueado');
+    mensajeCandado.textContent = "¡Desbloqueado! ❤️";
+    mensajeCandado.classList.add('exito');
+    
+    // Deshabilitar las ruedas
+    const botones = document.querySelectorAll('.btn-rueda');
+    botones.forEach(btn => btn.disabled = true);
+    
+    // Redirigir después de la animación
+    setTimeout(() => {
+        window.location.href = URL_DESTINO;
+    }, 2000);
 }
 
 // Empezamos la animación cuando la página carga
